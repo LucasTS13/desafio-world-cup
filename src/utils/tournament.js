@@ -9,3 +9,13 @@ export function generateGroups(teams) {
   }
   return groups;
 }
+
+export function generateMatches(group) {
+  const matches = [];
+  for (let i = 0; i < group.length; i++) {
+    for (let j = i + 1; j < group.length; j++) {
+      matches.push({ teamA: group[i].nome, teamB: group[j].nome });
+    }
+  }
+  return matches;
+}

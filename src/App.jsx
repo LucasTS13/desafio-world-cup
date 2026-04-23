@@ -1,8 +1,10 @@
 import { useState } from 'react'
 import Header from "./components/Header";
-import {shuffleTeams,generateGroups} from "./utils/tournament";
+import {shuffleTeams, generateGroups, generateMatches} from "./utils/tournament";
 
 function App() {
+const [groups, setGroups] = useState([]);
+
 const generateCup = async () => {
     const res = await fetch(
       "https://development-internship-api.geopostenergy.com/WorldCup/GetAllTeams",
@@ -10,13 +12,16 @@ const generateCup = async () => {
         headers: { "git-user": "LucasTS13" }
       }
     );
-
     const data = await res.json();
-    console.log(data)
+    
     const shuffled = shuffleTeams(data);
-    console.log(shuffled);
     const groupsGenerated = generateGroups(shuffled);
-    console.log(groupsGenerated);
+
+    const fullGroups = groupsGenerated.map(group => {
+      const matches = generateMatches(group);
+      return { teams: group, matches};
+    });
+
   }
   return (
     <div className='p-4'>
