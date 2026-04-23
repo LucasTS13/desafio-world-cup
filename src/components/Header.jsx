@@ -9,5 +9,5 @@ export default function Header({ onGenerate }) {
         Gerar Copa
       </button>
     </div>
-  )
+  );
 }

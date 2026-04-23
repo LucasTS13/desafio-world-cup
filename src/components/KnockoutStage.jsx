@@ -13,5 +13,5 @@ export default function KnockoutStage({ data }) {
         </div>
       ))}
     </div>
-  )
+  );
 }
