@@ -7,5 +7,5 @@ export default function MatchList({ matches }) {
         </div>
       ))}
     </div>
-  );
+  )
 }
