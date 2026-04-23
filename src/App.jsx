@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import Header from "./components/Header"
 import GroupStage from "./components/GroupStage"
-import {shuffleTeams, generateGroups, generateMatches, simulateMatch, calculateStandings} from "./utils/tournament";
+import {shuffleTeams, generateGroups, generateMatches, simulateMatch, calculateStandings, generateKnockoutStage} from "./utils/tournament";
 
 function App() {
 const [groups, setGroups] = useState([])
@@ -27,6 +27,9 @@ const generateCup = async () => {
       return { teams: group, matches: played, table}
     })
 
+    const knockoutData = generateKnockoutStage(fullGroups);
+    console.log(knockoutData);
+    
     setGroups(fullGroups)
   }
   return (

@@ -61,3 +61,56 @@ export function calculateStandings(teams, matches) {
     b.points - a.points || b.goalDiff - a.goalDiff || Math.random() - 0.5
   );
 }
+
+function playKnockoutMatch(teamA, teamB) {
+  let goalsA = Math.floor(Math.random() * 6)
+  let goalsB = Math.floor(Math.random() * 6)
+
+  let penaltiesA = 0
+  let penaltiesB = 0
+
+  if (goalsA === goalsB) {
+    penaltiesA = Math.floor(Math.random() * 5) + 1
+    penaltiesB = Math.floor(Math.random() * 5) + 1
+
+    while (penaltiesA === penaltiesB) {
+      penaltiesA = Math.floor(Math.random() * 5) + 1
+      penaltiesB = Math.floor(Math.random() * 5) + 1
+    }
+  }
+
+  const winner =
+    goalsA > goalsB || penaltiesA > penaltiesB ? teamA : teamB;
+
+  return { teamA, teamB, goalsA, goalsB, penaltiesA, penaltiesB, winner };
+}
+
+export function generateKnockoutStage(groups) {
+  const qualified = groups.flatMap(g => [g.table[0].name, g.table[1].name])
+
+  let current = qualified
+  const rounds = []
+  const names = ["Oitavas", "Quartas", "Semi", "Final"]
+
+  for (let r = 0; r < 4; r++) {
+    const matches = []
+    const next = []
+
+    for (let i = 0; i < current.length; i += 2) {
+      const match = playKnockoutMatch(current[i], current[i + 1]);
+      matches.push(match);
+      next.push(match.winner);
+    }
+
+    rounds.push({ name: names[r], matches });
+    current = next;
+  }
+
+  const finalMatch = rounds[3].matches[0];
+
+  return {
+    rounds,
+    champion: finalMatch.winner,
+    finalMatch
+  };
+}
