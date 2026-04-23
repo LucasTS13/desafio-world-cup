@@ -19,3 +19,10 @@ export function generateMatches(group) {
   }
   return matches;
 }
+
+export function simulateMatch(match) {
+  const goalsA = Math.floor(Math.random() * 6);
+  const goalsB = Math.floor(Math.random() * 6);
+
+  return { ...match, goalsA, goalsB };
+}

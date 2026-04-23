@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import Header from "./components/Header";
-import {shuffleTeams, generateGroups, generateMatches} from "./utils/tournament";
+import {shuffleTeams, generateGroups, generateMatches, simulateMatch,} from "./utils/tournament";
 
 function App() {
 const [groups, setGroups] = useState([]);
@@ -19,8 +19,11 @@ const generateCup = async () => {
 
     const fullGroups = groupsGenerated.map(group => {
       const matches = generateMatches(group);
-      return { teams: group, matches};
+      const played = matches.map(simulateMatch);
+      return { teams: group, matches: played};
     });
+    console.log(fullGroups);
+    
 
   }
   return (
