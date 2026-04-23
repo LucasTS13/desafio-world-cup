@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import Header from "./components/Header";
+import GroupTable from "./components/GroupTable";
 import {shuffleTeams, generateGroups, generateMatches, simulateMatch, calculateStandings} from "./utils/tournament";
 
 function App() {
@@ -25,13 +26,19 @@ const generateCup = async () => {
       const table = calculateStandings(group, played); //calcula tabela final
       return { teams: group, matches: played, table};
     });
-    console.log(fullGroups);
     
+    setGroups(fullGroups);
 
   }
   return (
     <div className='p-4'>
       <Header onGenerate={generateCup}/>
+      {groups.map((group, i) => (
+        <div key={i} className="border p-4 rounded">
+          <h2 className="font-bold mb-2">Grupo {String.fromCharCode(65 + i)}</h2>
+          <GroupTable table={group.table} />
+        </div>
+      ))}
     </div>
   )
 }
