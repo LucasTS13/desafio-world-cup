@@ -62,7 +62,7 @@ function App() {
     );
   };
   return (
-    <div className="p-4">
+    <div className="mx-auto min-h-screen max-w-7xl bg-slate-50/80 px-4 py-6 sm:px-6 sm:py-8 lg:px-10 lg:py-10">
       <Header onGenerate={generateCup} />
       <GroupStage groups={groups} />
       {knockout && <KnockoutStage data={knockout} />}
